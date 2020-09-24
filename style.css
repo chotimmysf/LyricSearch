@@ -1,0 +1,74 @@
+@import url("https://fonts.googleapis.com/css2?family=Gugi&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #fff;
+  color: #f5d311;
+  font-family: "Gugi", "Gill Sans", "Gill Sans MT", sans-serif;
+  margin: 0;
+}
+
+form#form.text {
+  font-family: "Gugi", "Gill Sans", "Gill Sans MT", sans-serif;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+input:focus,
+button:focus {
+  outline: none;
+}
+
+header {
+  background-image: url(https://pbs.twimg.com/media/EgHp0XPXgAA3aGl.jpg:large);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 0;
+  position: relative;
+}
+
+h1#maintext {
+  background-image: url(img/iridescent-holographic-background.jpg);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  font-size: 60px;
+}
+
+header:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(229, 180, 143, 0.45);
+}
+
+header * {
+  z-index: 2;
+}
+
+header h1 {
+  margin: 0 0 30px;
+}
+
+@media (max-width: 850px) {
+  header {
+    padding: 200px 0;
+  }
+}
