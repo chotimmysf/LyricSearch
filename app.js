@@ -17,33 +17,44 @@ async function searchSongs(term) {
 function showData(data) {
   let output = "";
 
-  //   data.data.forEach((song) => {
-  //     output += `
-  //       <li>
-  //         <span><strong><${song.artist.name}</strong> - <strong>${song.title}</strong></span>
-  //         <button class="btn" data-artist="${song.artist.name}" data-songtitle="${song.title}">Get Lyrics</button>
-  //       </li>
-  //       `;
-  //   });
-
-  //   result.innerHTML = `
-  //     <ul class="songs">
-  //         ${output}
-  //     </ul>
-  //   `;
-
   result.innerHTML = `
-  <ul class="songs>
+  <ul class="songs">
     ${data.data
       .map(
         (song) => `<li>
-    <span><strong><${song.artist.name}</strong> - ${song.title}</span>
+    <span><strong>${song.artist.name}</strong> - ${song.title}</span>
     <button class="btn" data-artist="${song.artist.name}" data-songtitle="${song.title}">Get Lyrics</button>
     </li>`
       )
       .join("")}
   </ul>
   `;
+
+  // Display Previous & Next Buttons, if applicable
+  if (data.prev || data.next) {
+    more.innerHTML = `
+        ${
+          data.prev
+            ? `<button class="btn" onclick="getMoreSongs('${data.prev}')">Previous</button>`
+            : ""
+        }
+        ${
+          data.next
+            ? `<button class="btn" onclick="getMoreSongs('${data.next}')">Next</button>`
+            : ""
+        }
+      `;
+  } else {
+    more.innerHTML = "";
+  }
+}
+
+// Get previous and next results
+async function getMoreSongs(url) {
+  const res = await fetch(`https://cors-anywhere.herokuapp.com/${url}`);
+  const data = await res.json();
+
+  showData(data);
 }
 
 // Event listeners
@@ -59,3 +70,22 @@ form.addEventListener("submit", (e) => {
     searchSongs(searchTerm);
   }
 });
+
+// Get lyrics button click
+result.addEventListener("click", (e) => {
+  const clickedEl = e.target;
+  if (clickedEl.tagName === "BUTTON") {
+    const artist = clickedEl.getAttribute("data-artist");
+    const songTitle = clickedEl.getAttribute("data-songTitle");
+  }
+
+  getLyrics(artist, songTitle);
+});
+
+// Get lyrics for song
+async function getLyrics(artist, songTitle) {
+  const res = await fetch(`${API_URL}/v1/${artist}/${songTitle}`);
+  const data = await res.json();
+
+  console.log(data);
+}
